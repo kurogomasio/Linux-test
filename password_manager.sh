@@ -22,11 +22,13 @@ do
 		dire="password_data.txt"
 		#なければ作成する
 		echo "サービス名:$strN ユーザー名:$strU パスワード:$strP"  >> $dire
-
+  		gpg -c $dire
+    		rm $dire
 		echo " パスワードの追加は成功しました。"
 	;;
 	$str3)# Get Password が入力された場合
 		read -p ' サービス名を入力してください:' strS
+  		gpg password_data.txt.gpg
 		# サービス名が保存されていなかった場合
 		if !  grep -qw  $strS password_data.txt; then
 			echo "そのサービスは登録されていません。"
@@ -36,6 +38,7 @@ do
 			grep -E $strS password_data.txt | awk '{print $2}'
 			grep -E $strS password_data.txt | awk '{print $3}'
 		fi
+  		rm password_data.txt
 	;;
 
 	$str4)# Exit が入力された場合
